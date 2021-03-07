@@ -355,20 +355,6 @@ function OptionsPrivate.MultipleDisplayTooltipMenu()
       func = function() WeakAuras_DropDownMenu:Hide() end
     }
   };
-  local anyGrouped = false;
-  for index, id in pairs(tempGroup.controlledChildren) do
-    local childData = WeakAuras.GetData(id);
-    if(childData and childData.parent) then
-      anyGrouped = true;
-      break;
-    end
-  end
-  if(anyGrouped) then
-    menu[1].notClickable = 1;
-    menu[1].text = "|cFF777777"..menu[1].text;
-    menu[2].notClickable = 1;
-    menu[2].text = "|cFF777777"..menu[2].text;
-  end
   return menu;
 end
 
@@ -1576,7 +1562,7 @@ function WeakAuras.NewAura(sourceData, regionType, targetId)
 
   AddDefaultSubRegions(data)
 
-  if (data.regionType ~= "group" and data.regionType ~= "dynamicgroup" and targetId) then
+  if targetId then
     local target = WeakAuras.GetDisplayButton(targetId);
     local group
     if (target) then
