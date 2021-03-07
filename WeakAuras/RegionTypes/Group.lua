@@ -112,6 +112,8 @@ local function modify(parent, region, data)
   region.bly = lowest;
   region.trx = rightest;
   region.try = highest;
+  region.height = highest - lowest
+  region.width = rightest - leftest
 
   -- Adjust frame-level sorting
   Private.FixGroupChildrenOrderForGroup(data);
