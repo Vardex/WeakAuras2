@@ -3883,8 +3883,11 @@ local function ApplyStateToRegion(id, cloneId, region, parent)
 
   UpdateMouseoverTooltip(region);
   region:Expand();
-  if parent and parent.ActivateChild then
+  while parent and parent.ActivateChild do
     parent:ActivateChild(id, cloneId)
+    id = parent.id
+    cloneId = nil
+    parent = WeakAuras.GetRegion(WeakAuras.GetData(parent.id).parent)
   end
 end
 
