@@ -521,7 +521,6 @@ local function importPendingData()
                 local data = toInsert[index][i]
                 local id = data.id
                 data.id = WeakAuras.FindUnusedId(id)
-                --data.parent = parentData.id;
                 WeakAuras.Add(data)
                 tinsert(installedData, index, data)
                 if hybridTables and hybridTables.new[id] then
@@ -577,7 +576,13 @@ local function importPendingData()
     parentData.controlledChildren = {}
     parentData.sortHybridTable = hybridTables and hybridTables.merged
     for index, installedChild in ipairs(installedData) do
-      local childParent = WeakAuras.GetData(installedChild.parent)
+      local childParent
+      if installedChild.parent then
+        childParent = WeakAuras.GetData(installedChild.parent)
+      else
+        installedChild.parent = parentData.id
+        childParent = parentData
+      end
       tinsert(childParent.controlledChildren, installedChild.id)
       WeakAuras.NewDisplayButton(installedChild)
       local childButton = WeakAuras.GetDisplayButton(installedChild.id)
