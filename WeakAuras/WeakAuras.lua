@@ -5383,6 +5383,16 @@ do
   function Private.TraverseAll(data)
     return coroutine.wrap(TraverseAll), data
   end
+
+  -- TODO nested remove
+  function WeakAuras.TraverseData(data, includeParent)
+    if (includeParent) then
+      return coroutine.wrap(TraverseAll), data
+    else
+      return coroutine.wrap(TraverseAllChildren), data
+    end
+  end
+
 end
 
 
