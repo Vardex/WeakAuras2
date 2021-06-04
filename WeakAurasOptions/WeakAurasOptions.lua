@@ -1392,6 +1392,19 @@ function OptionsPrivate.StartDrag(mainAura)
     end
   else
     if mainAura.controlledChildren then
+      -- Group aura
+      local children = {};
+      for child in OptionsPrivate.Private.TraverseAll(mainAura) do
+        local button = WeakAuras.GetDisplayButton(child.id);
+        button:DragStart("GROUP", true, mainAura)
+        children[child.id] = true
+      end
+      -- set dragging for non selected buttons
+      for id, button in pairs(displayButtons) do
+        if not children[button.data.id] then
+          button:DragStart("GROUP", false, mainAura);
+        end
+      end
     else
       for id, button in pairs(displayButtons) do
         button:DragStart("SINGLE", id == mainAura.id, mainAura);
